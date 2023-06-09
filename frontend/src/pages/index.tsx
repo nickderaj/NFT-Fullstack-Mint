@@ -1,22 +1,45 @@
-import { setSampleModalOpen } from '@/redux/slices/modalSlice';
-import { useDispatch } from 'react-redux';
+import MintForm from '@/components/nft/MintForm';
+import { connectWallet, setWallet } from '@/helpers/auth';
+import { setWalletAddress } from '@/redux/slices/userSlice';
+import { RootState } from '@/redux/store';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import PrimaryLayout from 'src/components/layouts/PrimaryLayout';
-import SampleModal from 'src/components/modals/SampleModal';
 import Button from 'src/elements/buttons/Button';
 import { PageWithLayout } from 'src/types/page';
 
 const Home: PageWithLayout = () => {
+  const { walletAddress } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
+
+  const handleConnect = () => {
+    if (!window?.ethereum) return;
+    connectWallet(dispatch);
+  };
+
+  useEffect(() => {
+    if (!window?.ethereum) return;
+
+    if (window.ethereum.isConnected()) setWallet(dispatch);
+    window.ethereum.on('disconnect', () => dispatch(setWalletAddress('')));
+    window.ethereum.on('accountsChanged', () => setWallet(dispatch));
+  }, [dispatch]);
 
   return (
     <>
-      <section className="flex justify-center items-center h-screen w-screen">
-        <Button onClick={() => dispatch(setSampleModalOpen(true))} title="OPEN MODAL" />
+      <section className="flex flex-col justify-center items-center min-h-screen min-w-screen">
+        {!walletAddress && <Button onClick={handleConnect} title="Connect Wallet" />}
+        {walletAddress && (
+          <>
+            <p className="text-lg">Wallet:</p>
+            <p className="text-base pb-12">{walletAddress}</p>
+          </>
+        )}
+        <MintForm />
       </section>
-      <SampleModal />
     </>
   );
 };
 
-Home.getLayout = (page: React.ReactNode) => <PrimaryLayout title="Home Page">{page}</PrimaryLayout>;
+Home.getLayout = (page: React.ReactNode) => <PrimaryLayout title="NFT Minting">{page}</PrimaryLayout>;
 export default Home;

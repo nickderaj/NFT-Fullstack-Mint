@@ -10,7 +10,7 @@ contract Mint is ERC721, Ownable {
     // Constants
     uint public constant MAX_TOKENS = 10000;
     uint private constant TOKENS_RESERVED = 5;
-    uint public price = 100000000000000000; // 0.1 ETH
+    uint public price = 1000000000000000; // 0.1 ETH
     uint256 public constant MAX_MINT_PER_TX = 5; // max tokens per transaction
     uint256 public constant MAX_MINT_PER_WALLET = 5; // max tokens per wallet
 
