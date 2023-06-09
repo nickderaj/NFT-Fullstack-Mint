@@ -36,4 +36,4 @@ This contract is an ERC721 Non-Fungible Token (NFT) contract. It allows users to
 3. `yarn deploy-stg` will deploy the contract to the sepolia network.
 4. `yarn verify-stg` will verify the contract on the sepolia network.
 
-Note: When running verify-stg, you will have to edit the contract address & timestamp in package.json to reflect the newly deployed contract.
+Note: When running verify-stg, you will have to edit the contract address in package.json to reflect the newly deployed contract.

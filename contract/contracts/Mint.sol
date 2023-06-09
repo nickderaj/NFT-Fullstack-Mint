@@ -22,7 +22,7 @@ contract Mint is ERC721, Ownable {
     string public baseExtension = ".json"; // for the metadata
 
     // Constructor
-    constructor() ERC721("NFT Name", "SYMBOL") {
+    constructor() ERC721("Mercedes NFT", "MERC") {
         baseUri = "ipfs://xxxxxxxxxxxxxxxxxxxxxxxxxxxxx/";
         for(uint256 i = 1; i <= TOKENS_RESERVED; ++i) {
             _safeMint(msg.sender, i);

@@ -5,7 +5,7 @@
     "compile": "hardhat compile",
     "test": "hardhat test",
     "deploy-stg": "hardhat run scripts/deploy.ts --network sepolia",
-    "verify-stg": "hardhat verify --network sepolia 0xBff62eE6991D9ba0DC86286E3a9f3AaeA748301d 1686315027"
+    "verify-stg": "hardhat verify --network sepolia 0xBCa9D669Ba964773fDF7f799B6Aa588Aa4cbF280"
   },
   "author": "Nicholas De Raj",
   "license": "ISC",
