@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/public/*": ["public/*"],
+      "@/styles/*": ["src/styles/*"],
+      "@/elements/*": ["src/elements/*"],
+      "@/components/*": ["src/components/*"],
+      "@/types/*": ["src/types/*"],
+      "@/helpers/*": ["src/helpers/*"],
+      "@/redux/*": ["src/app/redux/*"],
+      "@/tests/*": ["src/tests/*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/app/redux/slices/modalSlice.ts"],
+  "exclude": ["node_modules"]
+}
