@@ -31,11 +31,19 @@ This contract is an ERC721 Non-Fungible Token (NFT) contract. It allows users to
 
 ## Deploying
 
-1. `yarn compile` will compile the smart contract.
-2. `yarn test` will run all the test cases to ensure the contract is working as expected.
-3. `yarn deploy-stg` will deploy the contract to the sepolia network.
-4. `yarn verify-stg` will verify the contract on the sepolia network.
-5. Verify on etherscan, e.g. https://sepolia.etherscan.io/address/0xBCa9D669Ba964773fDF7f799B6Aa588Aa4cbF280#code
+1. Set up .env variables:
+
+```
+ETHERSCAN_API_KEY=abc
+SEPOLIA_PRIVATE_KEY=abc
+ALCHEMY_API_KEY=abc
+```
+
+2. `yarn compile` will compile the smart contract.
+3. `yarn test` will run all the test cases to ensure the contract is working as expected.
+4. `yarn deploy-stg` will deploy the contract to the sepolia network.
+5. `yarn verify-stg` will verify the contract on the sepolia network.
+6. Verify on etherscan, e.g. https://sepolia.etherscan.io/address/0xBCa9D669Ba964773fDF7f799B6Aa588Aa4cbF280#code
 
 Note: When running verify-stg, you will have to edit the contract address in package.json to reflect the newly deployed contract.
 
