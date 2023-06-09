@@ -1,4 +1,9 @@
 {
+  "name": "nft-fullstack-mint",
+  "version": "1.0.0",
+  "description": "nft minting full stack app",
+  "author": "Nicholas De Raj",
+  "license": "ISC",
   "scripts": {
     "prepare": "husky install"
   },

@@ -1,7 +1,7 @@
 {
-  "name": "nextjs-ts-setup",
-  "version": "0.1.0",
-  "private": true,
+  "name": "nft-minting-frontend",
+  "version": "1.0.0",
+  "author": "Nicholas De Raj",
   "engines": {
     "node": ">=14.0.0",
     "yarn": ">=1.22.0",
