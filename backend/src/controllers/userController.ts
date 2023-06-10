@@ -1,0 +1,29 @@
+import { Request, Response } from 'express';
+import { pool } from '../app';
+
+export const createUser = async (req: Request, res: Response) => {
+  try {
+    const { nric, wallet } = req.body;
+    const user = await pool.query(`INSERT INTO users (nric, wallet) VALUES ($1, $2)`, [nric, wallet]);
+    res.status(200).json({ message: 'Created user!', user });
+  } catch (e) {
+    let error = 'Failed to create user!';
+    if (e instanceof Error) error = e.message;
+    res.status(400).json({ error });
+  }
+};
+
+export const fetchUser = async (req: Request, res: Response) => {
+  try {
+    const { nric } = req.params;
+    const userQuery = await pool.query('SELECT nric, wallet FROM users WHERE nric = $1', [nric]);
+    const user = userQuery.rows[0];
+
+    if (!user) res.status(200).json({ message: 'User not found!' });
+    res.status(200).json({ message: 'fetched user!', user });
+  } catch (e) {
+    let error = 'Failed to fetch user!';
+    if (e instanceof Error) error = e.message;
+    res.status(400).json({ error });
+  }
+};

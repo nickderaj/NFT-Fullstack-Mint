@@ -1,11 +1,9 @@
 import * as crypto from 'crypto';
-import * as dotenv from 'dotenv';
+import { hashMessage } from 'ethers';
 import { Request, Response } from 'express';
-import { pool } from '../db';
-dotenv.config({ path: __dirname + '/.env' });
 
 const algorithm = 'aes-256-cbc';
-const key = process.env.ENCRYPTION_KEY;
+const key = process.env.ENCRYPTION_KEY ?? 'superSecretKey';
 
 function encryptResponse(message: string) {
   if (!key) throw new Error('Encryption key not found!');
@@ -32,12 +30,13 @@ function decryptResponse(encryptedResponse: string) {
 export const generateReceipt = async (req: Request, res: Response) => {
   try {
     const { nric, wallet } = req.body;
-    const receipt = encryptResponse(JSON.stringify(req.body));
+    if (!nric || !wallet) throw new Error('Invalid request body!');
 
-    await pool.query(`CREATE TABLE IF NOT EXISTS users (
-      nric SERIAL PRIMARY KEY,
-      wallet VARCHAR(255) UNIQUE NOT NULL`);
-    res.status(200).json({ message: 'Migrated!' });
+    const receipt = req.body;
+    const encryptedReceipt = encryptResponse(JSON.stringify(receipt));
+    const hashedRecept = hashMessage(receipt);
+
+    res.status(200).json({ encryptedReceipt, hashedRecept });
   } catch (e) {
     let error = 'Failed to generate receipt!';
     if (e instanceof Error) error = e.message;

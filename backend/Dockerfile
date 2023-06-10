@@ -1,15 +1,12 @@
-FROM node:14 as base
+FROM node:16.13.1-alpine3.14
 
-WORKDIR /home/node/app
+WORKDIR /usr/src/app
 
-COPY package.json ./
+COPY ["package.json", "package-lock.json", "tsconfig.json", ".env", "./"]
 
-RUN npm i
+COPY ./src ./src
 
-COPY . .
+RUN npm install
 
-FROM base as production
+CMD npm run dev
 
-ENV NODE_PATH=./build
-
-RUN npm run build

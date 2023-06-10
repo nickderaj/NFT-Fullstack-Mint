@@ -1,37 +1,9 @@
-# TypeScript + Node + Docker (with code hot-reloading in the container)
+This repo contains the code for the [Docker, Postgres, Node, Typescript Setup](https://dev.to/chandrapantachhetri/docker-postgres-node-typescript-setup-47db) article.
 
-## For running locally
+Note:
 
-`npm i`
+The `.env` file was commited for learning purposes. Do not commit it for a real project!
 
-### Start the dev server
-
-`npm run dev`
-
-### Build the project
-
-`npm run build`
-
-### Start built project
-
-`npm start`
-
-## For running Docker Containers
-
-_You'll need docker installed on your machine to run this in case you didn't know!_
-
-### Build the image
-
-`docker-compose build`
-
-### Start the dev server
-
-`make up`
-
-### Stop the server
-
-`make down`
-
-### Build and start production build
-
-`make up-prod`
+To run locally:
+ 1. Run `npm i`
+ 2. Run `docker-compose up`
