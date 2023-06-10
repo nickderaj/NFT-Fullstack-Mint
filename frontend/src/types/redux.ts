@@ -1,3 +1,5 @@
+import { NFT } from '@/models/NFT';
+
 export interface IModalState {
   sampleModalOpen: boolean;
 }
@@ -7,6 +9,6 @@ export interface IUserState {
 }
 
 export interface INftState {
-  nftsOwned: any[];
+  nftsOwned: NFT[];
   latestTx: string;
 }

@@ -3,9 +3,9 @@ export type NFT = {
   name: string;
   image: string;
   attributes: { value: string; trait_type: string }[];
+  description: string;
   edition: number;
   compiler: string;
   date: number;
-  description: string;
   dna: string;
 };

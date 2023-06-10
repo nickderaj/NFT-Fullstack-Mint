@@ -13,6 +13,22 @@ const alchemySettings = {
   network: Network.ETH_SEPOLIA,
 };
 
+// Fetch owned NFTs under this contract
+export const fetchNFTs = async (): Promise<NFT[]> => {
+  const walletAddress = store.getState().user.walletAddress || '';
+  if (!walletAddress) return [];
+
+  const alchemy = new Alchemy(alchemySettings);
+  const nftsForOwner = await alchemy.nft.getNftsForOwner(walletAddress);
+  const nfts: NFT[] = [];
+  for (const nft of nftsForOwner.ownedNfts) {
+    if (nft.contract.address !== CONTRACT_ADDRESS) continue;
+    nfts.push(nft.rawMetadata as NFT);
+  }
+
+  return nfts;
+};
+
 // Mint an NFT
 export const mint = async (amount: number, setState: React.Dispatch<React.SetStateAction<string>>, dispatch: Dispatch) => {
   try {
@@ -25,13 +41,17 @@ export const mint = async (amount: number, setState: React.Dispatch<React.SetSta
     const tx = await contract.mint(amount);
 
     // Wait for completion
+    toast('Waiting for contract...');
     const receipt = await tx.wait();
     dispatch(setLatestTx(receipt.hash));
 
     setState('Minted!');
     toast('Minted!', { type: 'success' });
     // Reset to allow minting again
-    setTimeout(() => setState('Mint'), 3000);
+    setTimeout(() => {
+      setState('Mint');
+      fetchNFTs();
+    }, 3000);
   } catch (error) {
     const errors = Object.values(errorTypes);
 
@@ -61,20 +81,4 @@ export const getPrice = async (): Promise<number> => {
     console.error('Get Price function error: ', error);
     return 0;
   }
-};
-
-export const fetchNFTs = async (): Promise<NFT[]> => {
-  console.log('hello');
-  const walletAddress = store.getState().user.walletAddress || '';
-  if (!walletAddress) return [];
-
-  const alchemy = new Alchemy(alchemySettings);
-  const nftsForOwner = await alchemy.nft.getNftsForOwner(walletAddress);
-  const nfts: NFT[] = [];
-  for (const nft of nftsForOwner.ownedNfts) {
-    if (nft.contract.address !== CONTRACT_ADDRESS) continue;
-    nfts.push(nft.rawMetadata as NFT);
-  }
-
-  return nfts;
 };

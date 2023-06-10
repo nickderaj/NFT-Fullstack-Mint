@@ -2,8 +2,10 @@ import MintForm from '@/components/nft/MintForm';
 import { connectWallet, setWallet } from '@/helpers/auth';
 import { setWalletAddress } from '@/redux/slices/userSlice';
 import { RootState } from '@/redux/store';
+import Image from 'next/image';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import PrimaryLayout from 'src/components/layouts/PrimaryLayout';
 import Button from 'src/elements/buttons/Button';
 import { PageWithLayout } from 'src/types/page';
@@ -13,7 +15,7 @@ const Home: PageWithLayout = () => {
   const dispatch = useDispatch();
 
   const handleConnect = () => {
-    if (!window?.ethereum) return;
+    if (!window?.ethereum) return toast('Please install Metamask', { type: 'error' });
     connectWallet(dispatch);
   };
 
@@ -26,12 +28,15 @@ const Home: PageWithLayout = () => {
   }, [dispatch]);
 
   return (
-    <>
-      <section className="flex flex-col justify-center items-center min-h-screen min-w-screen">
-        {!walletAddress && <Button onClick={handleConnect} title="Connect Wallet" />}
-        {walletAddress && <MintForm />}
-      </section>
-    </>
+    <section className="flex flex-col justify-center items-center min-h-screen min-w-screen">
+      {!walletAddress && (
+        <>
+          <Image src="/mint.gif" alt="Mint" width={240} height={240} className="rounded-full " />
+          <Button onClick={handleConnect} title="Connect Wallet" className="mt-4" />
+        </>
+      )}
+      {walletAddress && <MintForm />}
+    </section>
   );
 };
 
