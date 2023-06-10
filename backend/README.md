@@ -1,9 +1,27 @@
 ## Table of Contents
 
-1. [Introduction](#introduction)
-2. [Project Setup](#project-setup)
-3. [Functions](#functions)
-4. [Screenshots](#screenshots)
+1. [Screenshots](#screenshots)
+2. [Introduction](#introduction)
+3. [Project Setup](#project-setup)
+4. [Functions](#functions)
+
+## Screenshots
+
+| <img src="screenshots\1.png" width="500"> |
+| :---------------------------------------: |
+|  **Figure 1.** _Configure Env Variables_  |
+
+| <img src="screenshots\2.png" width="500"> |
+| :---------------------------------------: |
+|   **Figure 2.** _Run docker-compose up_   |
+
+| <img src="screenshots\3.png" width="500"> |
+| :---------------------------------------: |
+|     **Figure 3.** _Server is running_     |
+
+| <img src="screenshots\4.png" width="500"> |
+| :---------------------------------------: |
+|     **Figure 4.** _Migrate Database_      |
 
 ## Introduction
 
@@ -85,21 +103,3 @@ Note: The .env file was committed for simplicity but in a real project it would 
 - Response Body:
   - Status: 200
   - Body: { "message": "Created user!", "user": { "nric": string, "wallet": string }}
-
-## Screenshots
-
-| <img src="screenshots\1.png" width="500"> |
-| :---------------------------------------: |
-|  **Figure 1.** _Configure Env Variables_  |
-
-| <img src="screenshots\2.png" width="500"> |
-| :---------------------------------------: |
-|   **Figure 2.** _Run docker-compose up_   |
-
-| <img src="screenshots\3.png" width="500"> |
-| :---------------------------------------: |
-|     **Figure 3.** _Server is running_     |
-
-| <img src="screenshots\4.png" width="500"> |
-| :---------------------------------------: |
-|     **Figure 4.** _Migrate Database_      |

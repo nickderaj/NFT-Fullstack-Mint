@@ -1,11 +1,30 @@
 # NFT Contract
 
-1. [Constants](#constants)
-2. [Variables](#variables)
-3. [Deploying](#deploying)
-4. [Screenshots](#screenshots)
+1. [Screenshots](#screenshots)
+2. [Constants](#constants)
+3. [Variables](#variables)
+4. [Deploying](#deploying)
 
 This contract is an ERC721 Non-Fungible Token (NFT) contract. It allows users to mint NFTs, and to transfer and sell them to other users.
+
+## Screenshots
+
+| <img src="screenshots\1.png" width="500"> |
+| :---------------------------------------: |
+|         **Figure 1.** _Compiling_         |
+
+| <img src="screenshots\2.png" width="500"> |
+| :---------------------------------------: |
+|       **Figure 2.** _Running Tests_       |
+
+| <img src="screenshots\3.png" width="500"> |
+| :---------------------------------------: |
+|    **Figure 3.** _Deploying Contract_     |
+
+| <img src="screenshots\4.png" width="500"> |
+| :---------------------------------------: |
+|    **Figure 4.** \_Verifying Contract     |
+
 
 ## Constants
 
@@ -53,21 +72,3 @@ ALCHEMY_API_KEY=abc
 
 An example of the ipfs is: ipfs://QmPUBhCe53ZkuqZweYtPnaBpiCz9AsusuopbDWN5dKoDcZ/
 I created this ipfs data for my personal NFT creation, Ghost Cat NFT.
-
-## Screenshots
-
-| <img src="screenshots\1.png" width="500"> |
-| :---------------------------------------: |
-|         **Figure 1.** _Compiling_         |
-
-| <img src="screenshots\2.png" width="500"> |
-| :---------------------------------------: |
-|       **Figure 2.** _Running Tests_       |
-
-| <img src="screenshots\3.png" width="500"> |
-| :---------------------------------------: |
-|    **Figure 3.** _Deploying Contract_     |
-
-| <img src="screenshots\4.png" width="500"> |
-| :---------------------------------------: |
-|    **Figure 4.** \_Verifying Contract     |
