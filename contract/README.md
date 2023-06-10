@@ -47,7 +47,11 @@ ALCHEMY_API_KEY=abc
 5. `yarn deploy-stg` will deploy the contract to the sepolia network.
 6. `yarn verify-stg` will verify the contract on the sepolia network (you will have to edit the contract address in package.json to reflect the newly deployed contract).
 7. Verify on etherscan, e.g. https://sepolia.etherscan.io/address/0x31444Ec97a79692b04d46949f73440AA954f2073#code
-8. Once live, configure things like the base URI and price.
+8. Once live, configure things like the base URI (with an ipfs) and price if you don't want a free mint.
+9. Set the contract address in shared/constants/contract.constants.ts & update the ABI if the contract is changed.
+
+An example of the ipfs is: ipfs://QmPUBhCe53ZkuqZweYtPnaBpiCz9AsusuopbDWN5dKoDcZ/
+I created this ipfs data for my personal NFT creation, Ghost Cat NFT.
 
 ## Screenshots
 
