@@ -60,3 +60,7 @@ Note: This app was designed to only be used with yarn to prevent a `package-lock
 | <img src="public\screenshots\9.png" width="500"> |
 | :----------------------------------------------: |
 |           **Figure 9.** _Viewing NFTs_           |
+
+| <img src="public\screenshots\10.png" width="500"> |
+| :-----------------------------------------------: |
+|           **Figure 10.** _NRIC in use_            |

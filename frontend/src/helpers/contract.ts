@@ -23,7 +23,6 @@ export const fetchNFTs = async (): Promise<NFT[]> => {
   const nfts: NFT[] = [];
   for (const nft of nftsForOwner.ownedNfts) {
     if (nft.contract.address.toLowerCase() !== CONTRACT_ADDRESS.toLowerCase()) continue;
-    console.log(nft);
     nfts.push(nft.rawMetadata as NFT);
   }
 
