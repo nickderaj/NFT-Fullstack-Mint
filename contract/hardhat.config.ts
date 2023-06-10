@@ -1,6 +1,6 @@
-import { HardhatUserConfig } from 'hardhat/config';
 import '@nomicfoundation/hardhat-toolbox';
 import * as dotenv from 'dotenv';
+import { HardhatUserConfig } from 'hardhat/config';
 dotenv.config({ path: __dirname + '/.env' });
 
 const ETHERSCAN_KEY = process.env.ETHERSCAN_API_KEY ?? '';
