@@ -65,20 +65,24 @@ export const mint = async (amount: number, setState: React.Dispatch<React.SetSta
   }
 };
 
-// Get NFT Price
-export const getPrice = async (): Promise<number> => {
+// Get NFT Price & End Date
+export const getContractConfig = async (): Promise<{ price: number; endDate: number }> => {
   try {
     const provider = new ethers.BrowserProvider(window.ethereum);
     const signer = await provider.getSigner();
     const contract = new Contract(CONTRACT_ADDRESS, JSON.stringify(ABI), signer);
 
     let price = await contract.price();
+    const endDate = await contract.saleEndDate();
+
+    console.log(endDate);
 
     // convert wei to ether
     price = ethers.formatEther(price);
-    return +parseFloat(price).toFixed(4);
+    return { price: +parseFloat(price).toFixed(4), endDate: Number(endDate) };
   } catch (error) {
     console.error('Get Price function error: ', error);
-    return 0;
+    toast('Something went wrong!', { type: 'error' });
+    return { price: 0, endDate: Date.now() };
   }
 };

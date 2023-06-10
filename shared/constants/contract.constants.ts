@@ -247,19 +247,6 @@ export const ABI = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'isSaleActive',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
     inputs: [
       {
         internalType: 'uint256',
@@ -389,6 +376,19 @@ export const ABI = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'saleEndDate',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         internalType: 'address',
@@ -415,6 +415,19 @@ export const ABI = [
       },
     ],
     name: 'setBaseUri',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_saleEndDate',
+        type: 'uint256',
+      },
+    ],
+    name: 'setEndDate',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -462,13 +475,6 @@ export const ABI = [
       },
     ],
     stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'toggleSale',
-    outputs: [],
-    stateMutability: 'nonpayable',
     type: 'function',
   },
   {

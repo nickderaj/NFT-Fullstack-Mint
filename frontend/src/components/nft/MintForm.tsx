@@ -2,7 +2,8 @@ import { MAX_MINT, MIN_MINT } from '@/constants/contract.constants';
 import Button from '@/elements/buttons/Button';
 import LinkButton from '@/elements/buttons/LinkButton';
 import Spinner from '@/elements/loaders/Spinner';
-import { fetchNFTs, getPrice, mint } from '@/helpers/contract';
+import { fetchNFTs, getContractConfig, mint } from '@/helpers/contract';
+import { parseDate } from '@/helpers/helpers';
 import { setNftsOwned } from '@/redux/slices/nftSlice';
 import { RootState } from '@/redux/store';
 import Image from 'next/image';
@@ -13,6 +14,7 @@ const MintForm: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [amount, setAmount] = useState(1);
   const [price, setPrice] = useState<number>(0);
+  const [saleTime, setSaleTime] = useState<string>('');
   const [buttonText, setButtonText] = useState<string>('Mint');
   const { latestTx, nftsOwned } = useSelector((state: RootState) => state.nft);
   const dispatch = useDispatch();
@@ -50,8 +52,14 @@ const MintForm: React.FC = () => {
 
   useEffect(() => {
     // Fetch price from contract
-    getPrice()
-      .then((p) => setPrice(p || 0))
+    getContractConfig()
+      .then((p) => {
+        setPrice(p.price || 0);
+        const timeLeft = p.endDate * 1000 - Date.now();
+        if (timeLeft < 0) {
+          setSaleTime('Sale ended');
+        } else setSaleTime(parseDate(timeLeft));
+      })
       .catch((e) => console.log('Error getting price: ', e));
   }, []);
 
@@ -76,7 +84,8 @@ const MintForm: React.FC = () => {
           <h1 className="text-2xl font-bol text-center mt-6">Mint</h1>
           {nftsOwned.length < MAX_MINT && (
             <>
-              <h2 className="text-center mb-6">Price: {priceFormat}</h2>
+              <h2 className="text-center font-bold">Price: {priceFormat}</h2>
+              {saleTime && <h3 className="text-center mb-6 text-indigo-600">{saleTime}</h3>}{' '}
               <div className="grid grid-cols-3 items-center justify-center mb-4">
                 <button onClick={handleDecrement} className="text-2xl font-bold flex flex-1 justify-center">
                   -
@@ -96,7 +105,9 @@ const MintForm: React.FC = () => {
               </h1>
             </div>
           )}
-          <LinkButton href="/nft" title="View NFTs" variant={nftsOwned.length >= MAX_MINT ? 'primary' : 'secondary'} />
+          {nftsOwned.length > 0 && (
+            <LinkButton href="/nft" title="View NFTs" variant={nftsOwned.length >= MAX_MINT ? 'primary' : 'secondary'} />
+          )}{' '}
           {latestTx && (
             <div className="flex flex-col items-center justify-center mt-2">
               <h1 className="text-xl font-bold">Latest Transaction</h1>

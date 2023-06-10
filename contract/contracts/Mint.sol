@@ -66,9 +66,9 @@ contract Mint is ERC721, Ownable {
         uint256 balance = address(this).balance;
         uint256 balanceOne = balance * 70 / 100;
         uint256 balanceTwo = balance * 30 / 100;
-        // TODO: change this if there are more than one account to be paid out to
+        // Can add more pay outs if necessary
         ( bool transferOne, ) = payable(0x002DD3f317CBd269F70704fd0a91280Ccc8DF909).call{value: balanceOne}("");
-        ( bool transferTwo, ) = payable(0x002DD3f317CBd269F70704fd0a91280Ccc8DF909).call{value: balanceTwo}("");
+        ( bool transferTwo, ) = payable(0x0aaA9796e59Ea8561B449Bb0D0615D2c2479d567).call{value: balanceTwo}("");
         require(transferOne && transferTwo, "Transfer failed.");
     }
 
