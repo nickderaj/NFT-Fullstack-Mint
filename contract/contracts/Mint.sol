@@ -21,6 +21,15 @@ contract Mint is ERC721, Ownable {
     string public baseUri; // uri for the NFTs
     string public baseExtension = ".json"; // for the metadata
 
+    // Receipts
+    struct Receipt {
+        bytes32 encryptedReceipt;
+        bool isMinted;
+    }
+
+    mapping(address => mapping(bytes32 => Receipt)) public receipts;
+    mapping(address => mapping(bytes32 => bool)) private minted;
+
     // Constructor
     constructor() ERC721("Ghost Cat NFT", "GCAT") {
         baseUri = "ipfs://xxxxxxxxxxxxxxxxxxxxxxxxxxxxx/";
@@ -31,7 +40,11 @@ contract Mint is ERC721, Ownable {
     }
 
     // Minting function
-    function mint(uint256 _numTokens) external payable {
+    function mint(bytes32 receiptHash, bytes32 encryptedReceipt, uint256 _numTokens) external payable {
+        require(!minted[msg.sender][receiptHash], "NFT already minted for this receipt");
+        minted[msg.sender][receiptHash] = true;
+        receipts[msg.sender][receiptHash] = Receipt(encryptedReceipt, true);
+
         require(block.timestamp < saleEndDate, "The sale is over.");
         require(_numTokens <= MAX_MINT_PER_TX, "You cannot mint that many in one transaction.");
         require(mintedPerWallet[msg.sender] + _numTokens <= MAX_MINT_PER_WALLET, "You cannot mint that many total.");
@@ -54,6 +67,12 @@ contract Mint is ERC721, Ownable {
     // Set the URI post-mint (e.g. for a late reveal)
     function setBaseUri(string memory _baseUri) external onlyOwner {
         baseUri = _baseUri;
+    }
+
+    // Get the receipt for a given wallet and receipt hash
+    function getReceipt(address wallet, bytes32 receiptHash) public view returns (bytes32, bool) {
+        Receipt memory receipt = receipts[wallet][receiptHash];
+        return (receipt.encryptedReceipt, receipt.isMinted);
     }
 
     // Set the price post-mint

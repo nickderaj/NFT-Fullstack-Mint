@@ -1,9 +1,11 @@
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers';
 import { expect } from 'chai';
+import { randomBytes } from 'crypto';
 import { ethers, network } from 'hardhat';
 
 // Private fields from the contract:
 const contractOwner = '0x002DD3f317CBd269F70704fd0a91280Ccc8DF909';
+const contractSubOwner = '0x0aaA9796e59Ea8561B449Bb0D0615D2c2479d567';
 const tokensReserved = 5;
 
 describe('Mint', function () {
@@ -55,7 +57,7 @@ describe('Mint', function () {
     it('Should be able to mint by default', async function () {
       const { mint } = await loadFixture(deployContract);
 
-      await mint.mint(1);
+      await mint.mint(randomBytes(32), randomBytes(32), 1);
       expect(await mint.totalSupply()).to.equal(1 + tokensReserved);
     });
 
@@ -63,13 +65,13 @@ describe('Mint', function () {
       const { mint } = await loadFixture(deployContractWithBalance);
 
       await mint.setPrice('999999999999999999999');
-      await expect(mint.mint(1)).to.be.revertedWith('Insufficient funds.');
+      await expect(mint.mint(randomBytes(32), randomBytes(32), 1)).to.be.revertedWith('Insufficient funds.');
     });
 
     it('Should be able to mint if sale is enabled', async function () {
       const { mint } = await loadFixture(deployContractWithBalance);
       await mint.setPrice(0);
-      await mint.mint(1);
+      await mint.mint(randomBytes(32), randomBytes(32), 1);
       expect(await mint.totalSupply()).to.equal(1 + tokensReserved);
     });
   });
@@ -84,7 +86,10 @@ describe('Mint', function () {
     it('Should transfer the funds to the owner', async function () {
       const { mint } = await loadFixture(deployContractWithBalance);
 
-      await expect(mint.withdrawAll()).to.changeEtherBalances([contractOwner, mint], [4095, -4095]);
+      await expect(mint.withdrawAll()).to.changeEtherBalances(
+        [contractOwner, contractSubOwner, mint],
+        [Math.ceil(0.7 * 4095), Math.floor(0.3 * 4095), -4095]
+      );
     });
   });
 });
