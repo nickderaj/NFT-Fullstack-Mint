@@ -49,15 +49,21 @@ const MintForm: React.FC = () => {
   }, [amount, nftsOwned.length]);
 
   useEffect(() => {
+    // Fetch price from contract
     getPrice()
       .then((p) => setPrice(p || 0))
       .catch((e) => console.log('Error getting price: ', e));
+  }, []);
 
-    fetchNFTs().then((nfts) => {
-      dispatch(setNftsOwned(nfts));
-      setIsLoading(false);
-    });
-  }, [dispatch]);
+  useEffect(() => {
+    // Get NFTs owned by account
+    if (nftsOwned.length === 0) {
+      fetchNFTs().then((nfts) => {
+        dispatch(setNftsOwned(nfts));
+        setIsLoading(false);
+      });
+    } else setIsLoading(false);
+  }, [dispatch, nftsOwned.length]);
 
   const priceFormat = +(price * amount).toFixed(4) == 0 ? 'Free' : (price * amount).toFixed(4) + ' ETH';
 

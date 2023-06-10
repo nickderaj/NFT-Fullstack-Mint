@@ -12,18 +12,18 @@ const NftCard: React.FC<Props> = ({ nft }) => {
   };
 
   return (
-    <div>
-      <Image src={parseImage()} alt={nft.name} width={200} height={200} />
-      <div>{nft.name}</div>
-      <div>{nft.description}</div>
-      <div>{nft.image}</div>
-      {nft.attributes.map((attribute) => (
-        <div key={attribute.trait_type}>
-          <div>
-            {attribute.trait_type}: {attribute.value}
+    <div className="flex flex-col justify-center items-center">
+      <Image src={parseImage()} alt={nft.name} width={200} height={200} className="rounded-lg" />
+      <h2 className="text-lg font-bold text-center mb-2">{nft.name}</h2>
+      <h3 className="text-center border-b-2 w-full">Attributes:</h3>
+      <p className="leading-tight">
+        {nft.attributes.map((attribute) => (
+          <div key={attribute.trait_type} className="grid grid-cols-2">
+            <div>{attribute.trait_type}:</div>
+            <div> {attribute.value}</div>
           </div>
-        </div>
-      ))}
+        ))}
+      </p>
     </div>
   );
 };

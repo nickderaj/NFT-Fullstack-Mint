@@ -18,6 +18,7 @@ const Nft: PageWithLayout = () => {
   const dispatch = useDispatch();
 
   const handleReload = async () => {
+    setIsLoading(true);
     if (await window.ethereum.isConnected()) await setWallet(dispatch);
 
     fetchNFTs().then((nfts) => {
@@ -29,15 +30,24 @@ const Nft: PageWithLayout = () => {
   useEffect(() => {
     if (!window?.ethereum || !window.ethereum.isConnected()) router.push('/');
 
-    handleReload();
+    if (nftsOwned.length === 0) handleReload();
   }, [router, dispatch]);
 
   return (
-    <section className="flex flex-col justify-center items-center min-h-screen min-w-screen">
-      {isLoading && <Spinner />}
+    <section className="flex flex-col items-center min-h-screen min-w-screen">
+      <h1 className="font-bold text-xl mt-8"> Your NFTs</h1>
+      <div className="grid grid-cols-2 gap-2 my-4">
+        <Button onClick={() => router.push('/')} title="Back" variant="secondary" />
+        <Button onClick={handleReload} title="Refresh" disabled={isLoading} />
+      </div>
+      {isLoading && (
+        <div className="flex flex-1 justify-center items-center">
+          <Spinner />
+        </div>
+      )}
       {!isLoading && (
         <>
-          <div className="grid grid-cols-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-4">
             {nftsOwned.map((nft) => (
               <NftCard nft={nft} key={nft.dna} />
             ))}
@@ -50,10 +60,6 @@ const Nft: PageWithLayout = () => {
           )}
         </>
       )}
-      <div className="flex flex-col min-w-[180px] gap-2 mt-4">
-        {!isLoading && <Button onClick={handleReload} title="Refresh" />}
-        <Button onClick={() => router.push('/')} title="Back" variant="secondary" />
-      </div>
     </section>
   );
 };
