@@ -3,8 +3,8 @@ import { pool } from '../app';
 
 export const createUser = async (req: Request, res: Response) => {
   try {
-    const { nric, wallet } = req.body;
-    const user = await pool.query(`INSERT INTO users (nric, wallet) VALUES ($1, $2)`, [nric, wallet]);
+    const { wallet, nric } = req.body;
+    const user = await pool.query(`INSERT INTO users (wallet, nric) VALUES ($1, $2)`, [wallet, nric]);
     res.status(200).json({ message: 'Created user!', user });
   } catch (e) {
     let error = 'Failed to create user!';
@@ -15,8 +15,8 @@ export const createUser = async (req: Request, res: Response) => {
 
 export const fetchUser = async (req: Request, res: Response) => {
   try {
-    const { nric } = req.params;
-    const userQuery = await pool.query('SELECT nric, wallet FROM users WHERE nric = $1', [nric]);
+    const { wallet } = req.params;
+    const userQuery = await pool.query('SELECT nric, wallet FROM users WHERE wallet = $1', [wallet]);
     const user = userQuery.rows[0];
 
     if (!user) res.status(200).json({ message: 'User not found!' });

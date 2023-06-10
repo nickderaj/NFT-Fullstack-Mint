@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: IUserState = {
   walletAddress: '',
+  nric: '',
 };
 
 export const userSlice = createSlice({
@@ -12,12 +13,15 @@ export const userSlice = createSlice({
     setWalletAddress: (state, action: PayloadAction<string>) => {
       state.walletAddress = action.payload;
     },
+    setNric: (state, action: PayloadAction<string>) => {
+      state.nric = action.payload;
+    },
     clearUser: (state) => {
       state.walletAddress = '';
     },
   },
 });
 
-export const { setWalletAddress, clearUser } = userSlice.actions;
+export const { setWalletAddress, setNric, clearUser } = userSlice.actions;
 
 export default userSlice.reducer;

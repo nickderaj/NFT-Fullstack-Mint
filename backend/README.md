@@ -2,7 +2,6 @@
 
 1. [Introduction](#introduction)
 2. [Project Setup](#project-setup)
-3. [Questions & Suggestions](#questions--suggestions)
 
 ## Introduction
 
@@ -19,4 +18,4 @@ This is a very simple api with a postgres db integrated in the docker compose fi
 2. Run `docker-compose up`
 3. Call a GET request at `http://localhost:5431/migrate` to spin up the database.
 
-Note: This app was designed to only be used with yarn to prevent a `package-lock.json` from being created which can cause conflicts - change the `engines` in `package.json` if you want to use npm instead.
+Note: The .env file was committed for simplicity but in a real project it would be gitignored.

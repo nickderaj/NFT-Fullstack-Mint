@@ -21,12 +21,13 @@
       "@/components/*": ["src/components/*"],
       "@/types/*": ["src/types/*"],
       "@/helpers/*": ["src/helpers/*"],
-      "@/redux/*": ["src/app/redux/*"],
       "@/tests/*": ["src/tests/*"],
+      "@/redux/*": ["src/app/redux/*"],
+      "@/api/*": ["src/app/api/*"],
       "@/constants/*": ["../shared/constants/*"],
       "@/models/*": ["../shared/models/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/app/redux/slices/modalSlice.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/app/redux/slices/modalSlice.ts", "src/components/nft/nric.js"],
   "exclude": ["node_modules"]
 }

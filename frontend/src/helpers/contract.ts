@@ -75,8 +75,6 @@ export const getContractConfig = async (): Promise<{ price: number; endDate: num
     let price = await contract.price();
     const endDate = await contract.saleEndDate();
 
-    console.log(endDate);
-
     // convert wei to ether
     price = ethers.formatEther(price);
     return { price: +parseFloat(price).toFixed(4), endDate: Number(endDate) };

@@ -14,8 +14,11 @@ const customJestConfig = {
     '^@/components/(.*)$': '<rootDir>/src/components/$1',
     '^@/types/(.*)$': '<rootDir>/src/types/$1',
     '^@/helpers/(.*)$': '<rootDir>/src/helpers/$1',
-    '^@/redux/(.*)$': '<rootDir>/src/app/redux/$1',
     '^@/tests/(.*)$': '<rootDir>/src/tests/$1',
+    '^@/redux/(.*)$': '<rootDir>/src/app/redux/$1',
+    '^@/api/(.*)$': '<rootDir>/src/app/api/$1',
+    '^@/constants/(.*)$': '<rootDir>/../shared/constants/$1',
+    '^@/models/(.*)$': '<rootDir>/../shared/models/$1',
   },
   testEnvironment: 'jest-environment-jsdom',
 };

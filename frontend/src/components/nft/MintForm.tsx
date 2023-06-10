@@ -9,6 +9,7 @@ import { RootState } from '@/redux/store';
 import Image from 'next/image';
 import { MouseEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import NricInput from './NricInput';
 
 const MintForm: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -16,6 +17,7 @@ const MintForm: React.FC = () => {
   const [price, setPrice] = useState<number>(0);
   const [saleTime, setSaleTime] = useState<string>('');
   const [buttonText, setButtonText] = useState<string>('Mint');
+  const { nric } = useSelector((state: RootState) => state.user);
   const { latestTx, nftsOwned } = useSelector((state: RootState) => state.nft);
   const dispatch = useDispatch();
 
@@ -78,7 +80,8 @@ const MintForm: React.FC = () => {
   return (
     <>
       {isLoading && <Spinner />}
-      {!isLoading && (
+      {!isLoading && !nric && <NricInput />}
+      {!isLoading && nric && (
         <form className="flex flex-col max-w-[240px]">
           <Image src="/mint.gif" alt="Mint" width={240} height={240} className="rounded-full " />
           <h1 className="text-2xl font-bol text-center mt-6">Mint</h1>
