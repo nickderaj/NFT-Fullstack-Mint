@@ -1,6 +1,5 @@
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers';
 import { expect } from 'chai';
-import { randomBytes } from 'crypto';
 import { ethers, network } from 'hardhat';
 
 // Private fields from the contract:
@@ -57,7 +56,7 @@ describe('Mint', function () {
     it('Should be able to mint by default', async function () {
       const { mint } = await loadFixture(deployContract);
 
-      await mint.mint(randomBytes(32), randomBytes(32), 1);
+      await mint.mint('12345', '54321', 1);
       expect(await mint.totalSupply()).to.equal(1 + tokensReserved);
     });
 
@@ -65,13 +64,13 @@ describe('Mint', function () {
       const { mint } = await loadFixture(deployContractWithBalance);
 
       await mint.setPrice('999999999999999999999');
-      await expect(mint.mint(randomBytes(32), randomBytes(32), 1)).to.be.revertedWith('Insufficient funds.');
+      await expect(mint.mint('12345', '54321', 1)).to.be.revertedWith('Insufficient funds.');
     });
 
     it('Should be able to mint if sale is enabled', async function () {
       const { mint } = await loadFixture(deployContractWithBalance);
       await mint.setPrice(0);
-      await mint.mint(randomBytes(32), randomBytes(32), 1);
+      await mint.mint('12345', '54321', 1);
       expect(await mint.totalSupply()).to.equal(1 + tokensReserved);
     });
   });

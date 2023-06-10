@@ -3,6 +3,7 @@ import { connectWallet, setWallet } from '@/helpers/auth';
 import { setWalletAddress } from '@/redux/slices/userSlice';
 import { RootState } from '@/redux/store';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -24,7 +25,6 @@ const Home: PageWithLayout = () => {
 
     if (window.ethereum.isConnected()) setWallet(dispatch);
     window.ethereum.on('disconnect', () => dispatch(setWalletAddress('')));
-    window.ethereum.on('accountsChanged', () => connectWallet(dispatch));
   }, [dispatch]);
 
   return (

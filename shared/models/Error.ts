@@ -5,4 +5,5 @@ export const errorTypes = {
   MAX_TOTAL_SUPPLY: 'Exceeds total supply.',
   INSUFFICIENT_FUNDS: 'Insufficient funds.',
   DENIED_SIGNATURE: 'User denied transaction signature.',
+  RECEIPT_USED: 'NFT already minted for this receipt',
 };

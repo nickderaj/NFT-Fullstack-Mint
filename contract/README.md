@@ -46,7 +46,7 @@ ALCHEMY_API_KEY=abc
 4. `yarn test` will run all the test cases to ensure the contract is working as expected.
 5. `yarn deploy-stg` will deploy the contract to the sepolia network.
 6. `yarn verify-stg` will verify the contract on the sepolia network (you will have to edit the contract address in package.json to reflect the newly deployed contract).
-7. Verify on etherscan, e.g. https://sepolia.etherscan.io/address/0x45627D00c18DBDEbfACf539AC1656900c568C559#code
+7. Verify on etherscan, e.g. https://sepolia.etherscan.io/address/0x31444Ec97a79692b04d46949f73440AA954f2073#code
 8. Once live, configure things like the base URI and price.
 
 ## Screenshots

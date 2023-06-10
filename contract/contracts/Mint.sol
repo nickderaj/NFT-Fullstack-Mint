@@ -23,12 +23,12 @@ contract Mint is ERC721, Ownable {
 
     // Receipts
     struct Receipt {
-        bytes32 encryptedReceipt;
+        string encryptedReceipt;
         bool isMinted;
     }
 
-    mapping(address => mapping(bytes32 => Receipt)) public receipts;
-    mapping(address => mapping(bytes32 => bool)) private minted;
+    mapping(address => mapping(string => Receipt)) public receipts;
+    mapping(address => mapping(string => bool)) private minted;
 
     // Constructor
     constructor() ERC721("Ghost Cat NFT", "GCAT") {
@@ -40,7 +40,7 @@ contract Mint is ERC721, Ownable {
     }
 
     // Minting function
-    function mint(bytes32 receiptHash, bytes32 encryptedReceipt, uint256 _numTokens) external payable {
+    function mint(string memory receiptHash, string memory encryptedReceipt, uint256 _numTokens) external payable {
         require(!minted[msg.sender][receiptHash], "NFT already minted for this receipt");
         minted[msg.sender][receiptHash] = true;
         receipts[msg.sender][receiptHash] = Receipt(encryptedReceipt, true);
@@ -70,7 +70,7 @@ contract Mint is ERC721, Ownable {
     }
 
     // Get the receipt for a given wallet and receipt hash
-    function getReceipt(address wallet, bytes32 receiptHash) public view returns (bytes32, bool) {
+    function getReceipt(address wallet, string memory receiptHash) public view returns (string memory, bool) {
         Receipt memory receipt = receipts[wallet][receiptHash];
         return (receipt.encryptedReceipt, receipt.isMinted);
     }

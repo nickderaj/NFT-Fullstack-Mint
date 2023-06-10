@@ -1,3 +1,4 @@
+import { generateReceipt } from '@/api/nft.api';
 import { MAX_MINT, MIN_MINT } from '@/constants/contract.constants';
 import Button from '@/elements/buttons/Button';
 import LinkButton from '@/elements/buttons/LinkButton';
@@ -9,15 +10,17 @@ import { RootState } from '@/redux/store';
 import Image from 'next/image';
 import { MouseEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import NricInput from './NricInput';
 
 const MintForm: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isFetching, setIsFetching] = useState<boolean>(false);
   const [amount, setAmount] = useState(1);
   const [price, setPrice] = useState<number>(0);
   const [saleTime, setSaleTime] = useState<string>('');
   const [buttonText, setButtonText] = useState<string>('Mint');
-  const { nric } = useSelector((state: RootState) => state.user);
+  const { nric, walletAddress } = useSelector((state: RootState) => state.user);
   const { latestTx, nftsOwned } = useSelector((state: RootState) => state.nft);
   const dispatch = useDispatch();
 
@@ -27,9 +30,11 @@ const MintForm: React.FC = () => {
 
       let currAmount = amount;
       if (currAmount < MIN_MINT) currAmount = MIN_MINT;
-      if (currAmount > MAX_MINT - nftsOwned.length) currAmount = MAX_MINT;
+      if (currAmount > MAX_MINT - nftsOwned.length) currAmount = MAX_MINT - nftsOwned.length;
+      const res = await generateReceipt(walletAddress, nric);
+      const { encryptedReceipt, hashedReceipt } = res?.data;
 
-      await mint(currAmount, setButtonText, dispatch);
+      await mint(currAmount, setButtonText, dispatch, encryptedReceipt, hashedReceipt);
     } catch (error) {
       console.log('Error minting: ', error);
     }
@@ -45,6 +50,14 @@ const MintForm: React.FC = () => {
     e.preventDefault();
     if (amount === MAX_MINT) return;
     setAmount((prevState) => prevState + 1);
+  };
+
+  const refetchNFTs = async () => {
+    setIsFetching(true);
+    const nfts = await fetchNFTs();
+    if (nfts.length === 0) toast('No NFTs found - mint first!', { type: 'error' });
+    dispatch(setNftsOwned(nfts));
+    setIsFetching(false);
   };
 
   useEffect(() => {
@@ -99,6 +112,7 @@ const MintForm: React.FC = () => {
                 </button>
               </div>
               <Button onClick={handleMint} title={buttonText} disabled={buttonText !== 'Mint'} className="mb-2" />
+              <Button onClick={refetchNFTs} disabled={isFetching} title="Fetch NFTs" variant="secondary" className="mb-2" />
             </>
           )}
           {nftsOwned.length >= MAX_MINT && (
@@ -114,7 +128,7 @@ const MintForm: React.FC = () => {
           {latestTx && (
             <div className="flex flex-col items-center justify-center mt-2">
               <h1 className="text-xl font-bold">Latest Transaction</h1>
-              <a href={`https://rinkeby.etherscan.io/tx/${latestTx}`} target="_blank" rel="noreferrer" className="text-blue-500">
+              <a href={`https://sepolia.etherscan.io/tx/${latestTx}`} target="_blank" rel="noreferrer" className="text-blue-500">
                 {latestTx}
               </a>
             </div>

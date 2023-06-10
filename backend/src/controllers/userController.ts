@@ -19,7 +19,7 @@ export const fetchUser = async (req: Request, res: Response) => {
     const userQuery = await pool.query('SELECT nric, wallet FROM users WHERE wallet = $1', [wallet]);
     const user = userQuery.rows[0];
 
-    if (!user) res.status(200).json({ message: 'User not found!' });
+    if (!user) return res.status(200).json({ message: 'User not found!' });
     res.status(200).json({ message: 'fetched user!', user });
   } catch (e) {
     let error = 'Failed to fetch user!';

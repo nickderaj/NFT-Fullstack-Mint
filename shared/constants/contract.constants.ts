@@ -1,6 +1,6 @@
 export const MIN_MINT = 1;
 export const MAX_MINT = 5;
-export const CONTRACT_ADDRESS = '0x45627D00c18DBDEbfACf539AC1656900c568C559';
+export const CONTRACT_ADDRESS = '0x31444Ec97a79692b04d46949f73440AA954f2073';
 export const ABI = [
   {
     inputs: [],
@@ -226,6 +226,35 @@ export const ABI = [
     inputs: [
       {
         internalType: 'address',
+        name: 'wallet',
+        type: 'address',
+      },
+      {
+        internalType: 'string',
+        name: 'receiptHash',
+        type: 'string',
+      },
+    ],
+    name: 'getReceipt',
+    outputs: [
+      {
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
         name: 'owner',
         type: 'address',
       },
@@ -248,6 +277,16 @@ export const ABI = [
   },
   {
     inputs: [
+      {
+        internalType: 'string',
+        name: 'receiptHash',
+        type: 'string',
+      },
+      {
+        internalType: 'string',
+        name: 'encryptedReceipt',
+        type: 'string',
+      },
       {
         internalType: 'uint256',
         name: '_numTokens',
@@ -312,6 +351,35 @@ export const ABI = [
         internalType: 'uint256',
         name: '',
         type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+      {
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
+    ],
+    name: 'receipts',
+    outputs: [
+      {
+        internalType: 'string',
+        name: 'encryptedReceipt',
+        type: 'string',
+      },
+      {
+        internalType: 'bool',
+        name: 'isMinted',
+        type: 'bool',
       },
     ],
     stateMutability: 'view',

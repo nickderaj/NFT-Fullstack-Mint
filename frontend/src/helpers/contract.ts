@@ -22,7 +22,8 @@ export const fetchNFTs = async (): Promise<NFT[]> => {
   const nftsForOwner = await alchemy.nft.getNftsForOwner(walletAddress);
   const nfts: NFT[] = [];
   for (const nft of nftsForOwner.ownedNfts) {
-    if (nft.contract.address !== CONTRACT_ADDRESS) continue;
+    if (nft.contract.address.toLowerCase() !== CONTRACT_ADDRESS.toLowerCase()) continue;
+    console.log(nft);
     nfts.push(nft.rawMetadata as NFT);
   }
 
@@ -30,7 +31,13 @@ export const fetchNFTs = async (): Promise<NFT[]> => {
 };
 
 // Mint an NFT
-export const mint = async (amount: number, setState: React.Dispatch<React.SetStateAction<string>>, dispatch: Dispatch) => {
+export const mint = async (
+  amount: number,
+  setState: React.Dispatch<React.SetStateAction<string>>,
+  dispatch: Dispatch,
+  encryptedReceipt: string,
+  hashedReceipt: string,
+) => {
   try {
     setState('Minting...');
     const provider = new ethers.BrowserProvider(window.ethereum);
@@ -38,7 +45,7 @@ export const mint = async (amount: number, setState: React.Dispatch<React.SetSta
     const contract = new Contract(CONTRACT_ADDRESS, JSON.stringify(ABI), signer);
 
     // Mint NFT
-    const tx = await contract.mint(amount);
+    const tx = await contract.mint(hashedReceipt, encryptedReceipt, amount);
 
     // Wait for completion
     toast('Waiting for contract...');
@@ -54,13 +61,13 @@ export const mint = async (amount: number, setState: React.Dispatch<React.SetSta
     }, 3000);
   } catch (error) {
     const errors = Object.values(errorTypes);
+    setState('Mint');
 
     for (const err of errors) {
       if (String(error).includes(err)) {
-        toast(err, { type: 'error' });
+        return toast(err, { type: 'error' });
       }
     }
-    setState('Mint');
     console.error('Mint function error: ', error);
   }
 };
