@@ -8,7 +8,7 @@ contract Mint is ERC721, Ownable {
     using Strings for uint256;
 
     // Constants
-    uint public constant MAX_TOKENS = 10000;
+    uint public constant MAX_TOKENS = 1000;
     uint private constant TOKENS_RESERVED = 5;
     uint public price = 1000000000000000; // 0.1 ETH
     uint256 public constant MAX_MINT_PER_TX = 5; // max tokens per transaction
@@ -22,7 +22,7 @@ contract Mint is ERC721, Ownable {
     string public baseExtension = ".json"; // for the metadata
 
     // Constructor
-    constructor() ERC721("Mercedes NFT", "MERC") {
+    constructor() ERC721("Ghost Cat NFT", "GCAT") {
         baseUri = "ipfs://xxxxxxxxxxxxxxxxxxxxxxxxxxxxx/";
         for(uint256 i = 1; i <= TOKENS_RESERVED; ++i) {
             _safeMint(msg.sender, i);
@@ -32,7 +32,7 @@ contract Mint is ERC721, Ownable {
 
     // Minting function
     function mint(uint256 _numTokens) external payable {
-        require(isSaleActive, "The sale is paused.");
+        require(isSaleActive, "The sale is over.");
         require(_numTokens <= MAX_MINT_PER_TX, "You cannot mint that many in one transaction.");
         require(mintedPerWallet[msg.sender] + _numTokens <= MAX_MINT_PER_WALLET, "You cannot mint that many total.");
         uint256 curTotalSupply = totalSupply;

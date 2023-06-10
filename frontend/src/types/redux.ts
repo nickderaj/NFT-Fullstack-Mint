@@ -5,3 +5,8 @@ export interface IModalState {
 export interface IUserState {
   walletAddress: string;
 }
+
+export interface INftState {
+  nftsOwned: any[];
+  latestTx: string;
+}

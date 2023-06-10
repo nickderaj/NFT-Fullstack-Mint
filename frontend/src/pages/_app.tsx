@@ -2,6 +2,8 @@ import { store } from '@/redux/store';
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import { Provider } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { PageWithLayout } from 'src/types/page';
 
 interface AppPropsWithLayout extends AppProps {
@@ -10,7 +12,12 @@ interface AppPropsWithLayout extends AppProps {
 
 const App: React.FC<AppPropsWithLayout> = ({ Component, pageProps }) => {
   const getLayout = Component.getLayout ?? ((page) => page);
-  return <Provider store={store}>{getLayout(<Component {...pageProps} />)}</Provider>;
+  return (
+    <Provider store={store}>
+      {getLayout(<Component {...pageProps} />)}
+      <ToastContainer position="top-center" newestOnTop />
+    </Provider>
+  );
 };
 
 export default App;

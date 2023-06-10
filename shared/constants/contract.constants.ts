@@ -1,6 +1,6 @@
 export const MIN_MINT = 1;
 export const MAX_MINT = 5;
-export const CONTRACT_ADDRESS = '0xBCa9D669Ba964773fDF7f799B6Aa588Aa4cbF280';
+export const CONTRACT_ADDRESS = '0xbca9d669ba964773fdf7f799b6aa588aa4cbf280';
 export const ABI = [
   {
     inputs: [],

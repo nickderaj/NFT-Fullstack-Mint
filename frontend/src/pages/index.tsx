@@ -22,20 +22,14 @@ const Home: PageWithLayout = () => {
 
     if (window.ethereum.isConnected()) setWallet(dispatch);
     window.ethereum.on('disconnect', () => dispatch(setWalletAddress('')));
-    window.ethereum.on('accountsChanged', () => setWallet(dispatch));
+    window.ethereum.on('accountsChanged', () => connectWallet(dispatch));
   }, [dispatch]);
 
   return (
     <>
       <section className="flex flex-col justify-center items-center min-h-screen min-w-screen">
         {!walletAddress && <Button onClick={handleConnect} title="Connect Wallet" />}
-        {walletAddress && (
-          <>
-            <p className="text-lg">Wallet:</p>
-            <p className="text-base pb-12">{walletAddress}</p>
-          </>
-        )}
-        <MintForm />
+        {walletAddress && <MintForm />}
       </section>
     </>
   );

@@ -23,7 +23,8 @@
       "@/helpers/*": ["src/helpers/*"],
       "@/redux/*": ["src/app/redux/*"],
       "@/tests/*": ["src/tests/*"],
-      "@/constants/*": ["../shared/constants/*"]
+      "@/constants/*": ["../shared/constants/*"],
+      "@/models/*": ["../shared/models/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/app/redux/slices/modalSlice.ts"],
