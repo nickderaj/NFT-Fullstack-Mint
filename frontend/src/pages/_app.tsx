@@ -17,7 +17,7 @@ const App: React.FC<AppPropsWithLayout> = ({ Component, pageProps }) => {
   const router = useRouter();
 
   useEffect(() => {
-    window.ethereum.on('accountsChanged', () => router.reload());
+    window?.ethereum?.on('accountsChanged', () => router.reload());
   }, [router]);
 
   return (
