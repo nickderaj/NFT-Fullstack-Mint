@@ -8,14 +8,14 @@ contract Mint is ERC721, Ownable {
     using Strings for uint256;
 
     // Constants
-    uint public constant MAX_TOKENS = 1000;
-    uint private constant TOKENS_RESERVED = 5;
-    uint public price = 1000000000000000; // 0.1 ETH
+    uint256 public constant MAX_TOKENS = 1000;
+    uint256 private constant TOKENS_RESERVED = 5; // reserved in case of giveaways
+    uint256 public price = 0; // Free mint
     uint256 public constant MAX_MINT_PER_TX = 5; // max tokens per transaction
     uint256 public constant MAX_MINT_PER_WALLET = 5; // max tokens per wallet
 
     // Variables
-    bool public isSaleActive; // toggle if users should be able to mint
+    uint256 public saleEndDate = block.timestamp + 1209600; // 2 weeks
     uint256 public totalSupply; // num tokens minted
     mapping(address => uint256) private mintedPerWallet; // how many tokens a wallet has minted
     string public baseUri; // uri for the NFTs
@@ -32,7 +32,7 @@ contract Mint is ERC721, Ownable {
 
     // Minting function
     function mint(uint256 _numTokens) external payable {
-        require(isSaleActive, "The sale is over.");
+        require(block.timestamp < saleEndDate, "The sale is over.");
         require(_numTokens <= MAX_MINT_PER_TX, "You cannot mint that many in one transaction.");
         require(mintedPerWallet[msg.sender] + _numTokens <= MAX_MINT_PER_WALLET, "You cannot mint that many total.");
         uint256 curTotalSupply = totalSupply;
@@ -47,8 +47,8 @@ contract Mint is ERC721, Ownable {
     }
 
     // Only the owner of the contract can toggle the sale state
-    function toggleSale() external onlyOwner {
-        isSaleActive = !isSaleActive;
+    function setEndDate(uint256 _saleEndDate) external onlyOwner {
+        saleEndDate = _saleEndDate;
     }
 
     // Set the URI post-mint (e.g. for a late reveal)

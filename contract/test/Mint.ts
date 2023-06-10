@@ -45,36 +45,30 @@ describe('Mint', function () {
       expect(await mint.baseUri()).to.equal('https://example.com/');
     });
 
-    it('Should have a toggle sale function', async function () {
+    it('Should have a set end date function', async function () {
       const { mint } = await loadFixture(deployContract);
-      const currentState = await mint.isSaleActive();
-      await mint.toggleSale();
-      expect(await mint.isSaleActive()).to.equal(!currentState);
+      const newEndDate = Date.now() + 1000;
+      await mint.setEndDate(newEndDate);
+      expect(await mint.saleEndDate()).to.equal(newEndDate);
     });
 
-    it('Should not be able to mint by default', async function () {
+    it('Should be able to mint by default', async function () {
       const { mint } = await loadFixture(deployContract);
-      expect(await mint.isSaleActive()).to.equal(false);
-      expect(mint.mint(1)).to.be.revertedWith('The sale is paused.');
+
+      await mint.mint(1);
+      expect(await mint.totalSupply()).to.equal(1 + tokensReserved);
     });
 
     it("Should not be able to mint if user can't afford it", async function () {
       const { mint } = await loadFixture(deployContractWithBalance);
 
-      const currentState = await mint.isSaleActive();
-      if (!currentState) await mint.toggleSale();
       await mint.setPrice('999999999999999999999');
-
       await expect(mint.mint(1)).to.be.revertedWith('Insufficient funds.');
     });
 
     it('Should be able to mint if sale is enabled', async function () {
       const { mint } = await loadFixture(deployContractWithBalance);
-
-      const currentState = await mint.isSaleActive();
-      if (!currentState) await mint.toggleSale();
       await mint.setPrice(0);
-
       await mint.mint(1);
       expect(await mint.totalSupply()).to.equal(1 + tokensReserved);
     });
