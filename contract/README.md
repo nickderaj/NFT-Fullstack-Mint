@@ -3,6 +3,7 @@
 1. [Constants](#constants)
 2. [Variables](#variables)
 3. [Deploying](#deploying)
+4. [Screenshots](#screenshots)
 
 This contract is an ERC721 Non-Fungible Token (NFT) contract. It allows users to mint NFTs, and to transfer and sell them to other users.
 
