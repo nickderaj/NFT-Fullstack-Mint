@@ -2,11 +2,10 @@
 
 1. [Introduction](#introduction)
 2. [Project Setup](#project-setup)
-3. [Questions & Suggestions](#questions--suggestions)
 
 ## Introduction
 
-This is a Next.js starter template with TypeScript to easily get started on a production ready app. Included are
+This is a very simple Minting DApp. Included are:
 
 - Redux Tookit: To store and manage global state
 - Jest: To run unit/integration tests
@@ -22,8 +21,3 @@ This is a Next.js starter template with TypeScript to easily get started on a pr
 - The lint function will auto-run when you try to commit to a git repo, set up in the .husky folder.
 
 Note: This app was designed to only be used with yarn to prevent a `package-lock.json` from being created which can cause conflicts - change the `engines` in `package.json` if you want to use npm instead.
-
-## Questions & Suggestions
-
-If you have any questions, feel free to reach out at nickderaj@gmail.com or message me on Discord at NickD#1188<br/>
-If there's something you think should be added, branch out and make a PR! :)
