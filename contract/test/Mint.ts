@@ -64,14 +64,14 @@ describe('Mint', function () {
       const { mint } = await loadFixture(deployContractWithBalance);
 
       await mint.setPrice('999999999999999999999');
-      await expect(mint.mint('12345', '54321', 1)).to.be.revertedWith('Insufficient funds.');
+      expect(mint.mint('12345', '54321', 1)).to.be.revertedWith('Insufficient funds.');
     });
 
-    it('Should be able to mint if sale is enabled', async function () {
+    it('Should not be able to mint if the sale is over', async function () {
       const { mint } = await loadFixture(deployContractWithBalance);
       await mint.setPrice(0);
-      await mint.mint('12345', '54321', 1);
-      expect(await mint.totalSupply()).to.equal(1 + tokensReserved);
+      await mint.setEndDate(0);
+      expect(mint.mint('12345', '54321', 1)).to.be.revertedWith('The sale is over.');
     });
   });
 
